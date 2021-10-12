@@ -116,7 +116,7 @@ public class GameScreen implements Screen {
             bucket.x = Drop.VIEW_WIDTH - BUCKET_WIDTH;
 
 		// Has a second passed since the last drop?
-		if (TimeUtils.nanoTime() - lastDrop > 1000000000-(score*10)) spawnRaindrop();
+		if (TimeUtils.nanoTime() - lastDrop > (1000000000/2)-(score*10)) spawnRaindrop();
 
 
 		for (ArrayIterator<GameObject> iter = droplets.iterator(); iter.hasNext(); ) {
