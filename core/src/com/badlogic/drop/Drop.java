@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Drop extends Game {
 
-	public static int VIEW_WIDTH = 800;
-	public static int VIEW_HEIGHT = 480;
+	public static float VIEW_WIDTH = 800;
+	public static float VIEW_HEIGHT = 480;
 	
 	private SpriteBatch batch;
 	private Screen screen;

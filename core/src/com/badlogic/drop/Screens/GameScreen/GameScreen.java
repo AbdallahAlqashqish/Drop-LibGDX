@@ -22,10 +22,10 @@ import com.badlogic.gdx.utils.TimeUtils;
 public class GameScreen implements Screen {
 
 	//Game object dimensions
-    public static int BUCKET_WIDTH = 64;
-	public static int BUCKET_HEIGHT = 64;
-    public static int DROP_WIDTH = 64;
-    public static int DROP_HEIGHT = 64;
+    public static float BUCKET_WIDTH = 64;
+	public static float BUCKET_HEIGHT = 64;
+    public static float DROP_WIDTH = 64;
+    public static float DROP_HEIGHT = 64;
 	
 	//Game Object Textures
 	private Texture dropTexture;
