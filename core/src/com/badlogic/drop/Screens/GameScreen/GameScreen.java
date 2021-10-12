@@ -89,7 +89,7 @@ public class GameScreen implements Screen {
 
 		font = new BitmapFont();
 		font.setColor(Color.WHITE);
-		font.getData().setScale(5);
+		font.getData().setScale(3);
     }
 
     /**
@@ -130,7 +130,7 @@ public class GameScreen implements Screen {
 				score++;
 			}
 			
-			//Is the 
+			//Has the raindrop dropped to the ground
 			if(raindrop.y + 64 < 0) iter.remove();
 		}
 
@@ -141,7 +141,10 @@ public class GameScreen implements Screen {
 			batch.draw(drop.texture, drop.x, drop.y, DROP_WIDTH, DROP_HEIGHT);
 		}
 		String scoreStr = String.valueOf(score);
-		font.draw(batch, scoreStr, Drop.VIEW_WIDTH/2 - ((font.getSpaceXadvance()*scoreStr.length())/2), Drop.VIEW_HEIGHT-font.getLineHeight()-20);
+		font.draw(batch,  
+				  scoreStr, 
+				  Drop.VIEW_WIDTH/2 - ((font.getSpaceXadvance()*scoreStr.length())/2), //X position
+				  Drop.VIEW_HEIGHT-font.getLineHeight()-20); //Y position
 		batch.end();
     }
 
@@ -152,9 +155,11 @@ public class GameScreen implements Screen {
 	 */
     @Override
     public void resize(int width, int height) {
+		//Set new dimensions
         Drop.VIEW_WIDTH = width;
         Drop.VIEW_HEIGHT = height;
 
+		//Update camera to new dimensions
         this.camera.setToOrtho(false, Drop.VIEW_WIDTH, Drop.VIEW_HEIGHT);
 		this.camera.update();
     }
@@ -169,7 +174,7 @@ public class GameScreen implements Screen {
     public void hide() {}
 
 	/**
-	 * 
+	 * Dispose of all resources for this screen
 	 */
     @Override
     public void dispose() {
@@ -177,6 +182,7 @@ public class GameScreen implements Screen {
 		bucket.dispose();
 		dropSound.dispose();
 		rainMusic.dispose();
+		font.dispose();
     }
 
     /**
@@ -185,12 +191,14 @@ public class GameScreen implements Screen {
     private void spawnRaindrop() {
 		GameObject raindrop = new GameObject(dropTexture);
 
+		//Generate raindrop position
 		raindrop.x = MathUtils.random(0, Drop.VIEW_WIDTH-bucket.width);
 		raindrop.y = Drop.VIEW_HEIGHT;
-
 		raindrop.width = DROP_WIDTH;
 		raindrop.height = DROP_HEIGHT;
+
 		droplets.add(raindrop);
+
 		lastDrop = TimeUtils.nanoTime();
 	}
 

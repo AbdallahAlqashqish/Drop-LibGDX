@@ -8,10 +8,17 @@ public class GameObject extends Rectangle implements Disposable {
 
     public final Texture texture;
 
+    /**
+     * 
+     * @param texture: The texture of the object to draw to the screen
+     */
     public GameObject(Texture texture) {
         this.texture = texture;
     }
 
+    /**
+     * Dispose of object resources
+     */
     @Override
     public void dispose() {
         this.texture.dispose();        
