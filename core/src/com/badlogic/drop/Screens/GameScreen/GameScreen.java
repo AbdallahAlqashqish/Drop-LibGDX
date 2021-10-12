@@ -7,8 +7,10 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
@@ -43,6 +45,8 @@ public class GameScreen implements Screen {
 
     private SpriteBatch batch;
 	private OrthographicCamera camera;
+
+	private BitmapFont font;
 
 	/**
 	 * 
@@ -82,6 +86,10 @@ public class GameScreen implements Screen {
         //Droplets control
 		droplets = new Array<GameObject>();
 		spawnRaindrop();
+
+		font = new BitmapFont();
+		font.setColor(Color.WHITE);
+		font.getData().setScale(5);
     }
 
     /**
@@ -114,20 +122,26 @@ public class GameScreen implements Screen {
 		for (ArrayIterator<GameObject> iter = droplets.iterator(); iter.hasNext(); ) {
 			GameObject raindrop = iter.next();
 			raindrop.y -= 200 * delta *  (Drop.VIEW_HEIGHT/480);
-            if(raindrop.overlaps(bucket)) {
+
+            if(raindrop.overlaps(bucket)) { //Is the raindrop caught?
 				dropSound.play();
 				iter.remove();
 
 				score++;
-			 }
+			}
+			
+			//Is the 
 			if(raindrop.y + 64 < 0) iter.remove();
 		}
 
+		//Draw onto the screen
 		batch.begin();
 		batch.draw(bucket.texture, bucket.x, bucket.y, BUCKET_WIDTH, BUCKET_HEIGHT);
 		for (GameObject drop : droplets) {
 			batch.draw(drop.texture, drop.x, drop.y, DROP_WIDTH, DROP_HEIGHT);
 		}
+		String scoreStr = String.valueOf(score);
+		font.draw(batch, scoreStr, Drop.VIEW_WIDTH/2 - ((font.getSpaceXadvance()*scoreStr.length())/2), Drop.VIEW_HEIGHT-font.getLineHeight()-20);
 		batch.end();
     }
 
